@@ -46,9 +46,6 @@ def isEmpty(x, y):
         return True
     return False
 
-def isBotWinning():
-    return False
-
 def isWinning(sign = user_sign):
     # horizontal check
     for i in range(len(board)):
