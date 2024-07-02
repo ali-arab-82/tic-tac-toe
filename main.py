@@ -78,6 +78,12 @@ def bot():
     if isEmpty(1, 1):
         board[1][1] = bot_sign
         return False
+    elif board[1][1] == user_sign:
+        index = randint(0, 3)
+        coordinates = [(0, 0), (0, 2), (2, 0), (2, 2)]
+        x, y = coordinates[index]
+        board[x][y] = bot_sign
+        return False
     
     is_winning, x, y = isWinning(bot_sign)
     if is_winning and isEmpty(x, y):
