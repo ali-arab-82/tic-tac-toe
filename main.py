@@ -75,35 +75,35 @@ def isWinning(sign = user_sign):
     return False, None, None
 
 def bot():
-    if isEmpty(1, 1):
-        board[1][1] = bot_sign
-        return False
-    elif board[1][1] == user_sign:
-        index = randint(0, 3)
-        coordinates = [(0, 0), (0, 2), (2, 0), (2, 2)]
-        x, y = coordinates[index]
-        board[x][y] = bot_sign
-        return False
-    
-    is_winning, x, y = isWinning(bot_sign)
-    if is_winning and isEmpty(x, y):
-        board[x][y] = bot_sign
-        showBoard()
-        return True
-    
-    is_winning, x, y = isWinning(user_sign)
-    if is_winning and isEmpty(x, y):
-        print(x, y)
-        board[x][y] = bot_sign
-    else:
-        x = randint(0, 2)
-        y = randint(0, 2)
+    if '_' in board[0] or '_' in board[1] or '_' in board[2]:
+        if isEmpty(1, 1):
+            board[1][1] = bot_sign
+            return False
         
-        while not isEmpty(x, y) and ('_' in board[0] or '_' in board[1] or '_' in board[2]):
-            x = randint(0, 2)
-            y = randint(0, 2)
-        board[x][y] = bot_sign
-
+        is_winning, x, y = isWinning(bot_sign)
+        if is_winning and isEmpty(x, y):
+            board[x][y] = bot_sign
+            showBoard()
+            return True
+        
+        is_winning, x, y = isWinning(user_sign)
+        if is_winning and isEmpty(x, y):
+            board[x][y] = bot_sign
+        elif board[1][1] == user_sign:
+            while True:
+                index = randint(0, 3)
+                coordinates = [(0, 0), (0, 2), (2, 0), (2, 2)]
+                x, y = coordinates[index]
+                if isEmpty(x, y):
+                    board[x][y] = bot_sign
+                    return False
+        else:
+            while ('_' in board[0] or '_' in board[1] or '_' in board[2]):
+                x = randint(0, 2)
+                y = randint(0, 2)
+                if isEmpty(x, y):
+                    board[x][y] = bot_sign
+                    return False
     return False
 
 is_bot_wins = False
@@ -125,6 +125,9 @@ while '_' in board[0] or '_' in board[1] or '_' in board[2]:
             print("Bot wins")
             break
         showBoard()
+        if '_' not in board[0] and '_' not in board[1] and '_' not in board[2]:
+            print("Draw")
+            exit()
         getInput()
 
 # user can't win the bot (the bot won't make mistakes)
